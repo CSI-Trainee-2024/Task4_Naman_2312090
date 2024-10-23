@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/screens/homeScreen.dart';
 import 'package:todo_app/screens/splashScreen.dart';
 
 void main() {
@@ -27,6 +28,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return splashScreen();
+    return homeScreen();
   }
 }

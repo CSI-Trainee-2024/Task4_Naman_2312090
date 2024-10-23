@@ -12,15 +12,27 @@ class HomeScreenState extends State<homeScreen> {
         builder: (context) {
           return AlertDialog(
             title: Text("Add New task"),
-            content: Column(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Container(height: 100, child: TextField()),
-                ),
-                Expanded(
-                    flex: 2, child: Container(height: 200, child: TextField()))
-              ],
+            content: Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(child: TextField(
+                      decoration: InputDecoration(
+                        //alignLabelWithHint: true
+                        hintText: 'Title'
+                      ),
+                    )),
+                  ),
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                          child: TextField(
+                      )))
+                ],
+              ),
             ),
             actions: [
               MaterialButton(
@@ -40,9 +52,6 @@ class HomeScreenState extends State<homeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final screenWidth = screenSize.width;
-    final screenHeight = screenSize.height;
     return Scaffold(
       appBar: AppBar(
         title: const Center(
