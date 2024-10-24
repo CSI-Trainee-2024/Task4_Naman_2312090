@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/theme/textField.dart';
 
 class homeScreen extends StatefulWidget {
   @override
@@ -6,31 +7,51 @@ class homeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<homeScreen> {
+  var titleController = TextEditingController();
+  var descriptionController = TextEditingController();
+
   void addTask() {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
+            backgroundColor: Colors.deepPurple.shade200,
             title: Text("Add New task"),
-            content: Container(
+            content: SizedBox(
               height: MediaQuery.of(context).size.height * 0.3,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
                   Expanded(
-                    flex: 1,
-                    child: Container(child: TextField(
-                      decoration: InputDecoration(
-                        //alignLabelWithHint: true
-                        hintText: 'Title'
-                      ),
-                    )),
+                      flex: 1,
+                      child: customField(
+                        editingController: titleController,
+                        hintText: 'Title',
+                        addIcon: Icon(
+                          Icons.title_outlined,
+                          size: 30,
+                        ),
+                        //font_hint: 25.0,
+                        labelText: 'Title',
+                        textLength: 30,
+                      )),
+                  SizedBox(
+                    height: 20,
                   ),
                   Expanded(
                       flex: 2,
-                      child: Container(
-                          child: TextField(
-                      )))
+                      child: customField(
+                        editingController: descriptionController,
+                        hintText: 'Description',
+                        addIcon: Icon(
+                          Icons.note_add_outlined,
+                          size: 30,
+                        ),
+                        // font_hint: 25.0,
+                        labelText: 'Description',
+                        maxLines: 5,
+                        textLength: 60,
+                      ))
                 ],
               ),
             ),
@@ -39,11 +60,30 @@ class HomeScreenState extends State<homeScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Cancel"),
+                child: Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Color(0xff09203f),
+                    ),
+                    child: Text("Cancel",
+                        style: TextStyle(fontSize: 25, color: Colors.white))),
               ),
               MaterialButton(
-                onPressed: () {},
-                child: Text("Add"),
+                onPressed: () {
+                  String title = titleController.text;
+                  String desp = descriptionController.text;
+                  print("Title is:${title}\nDescription is:${desp}");
+                },
+                child: Container(
+                    padding: EdgeInsets.only(
+                        bottom: 10, top: 10, left: 20, right: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Color(0xff09203f),
+                    ),
+                    child: Text("Add",
+                        style: TextStyle(fontSize: 25, color: Colors.white))),
               ),
             ],
           );
@@ -64,8 +104,8 @@ class HomeScreenState extends State<homeScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         elevation: 10,
-        backgroundColor: Colors.blueGrey,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.deepPurple.shade200,
+        foregroundColor: Colors.black,
         onPressed: addTask,
         label: Text(
           "Add task",
