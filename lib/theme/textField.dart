@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class customField extends StatelessWidget {
   final int? maxLines;
   final String hintText;
-  //final double? font_hint;
   final int? textLength;
   final String? labelText;
   final Icon? addIcon;
@@ -13,7 +11,6 @@ class customField extends StatelessWidget {
   customField(
       {this.maxLines,
       required this.hintText,
-      // this.font_hint,
       this.textLength,
       this.labelText,
       this.addIcon,

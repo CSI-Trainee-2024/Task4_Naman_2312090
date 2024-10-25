@@ -15,26 +15,25 @@ class HomeScreenState extends State<homeScreen> {
     [
       'Work Hard',
       'Need to workOut',
-      false,
     ],
-    ['Drink Coffee', 'Need to drink', false],
-    ['Learn Flutter', 'Need to learn', false],
+    ['Drink Coffee', 'Need to drink'],
+    ['Learn Flutter', 'Need to learn'],
   ];
-
-  void checkBoxChanged(int index) {
-    setState(() {
-      // todoList[index][2] = !todoList[index][2];
-    });
-  }
 
   void saveTask() {
     String title = titleController.text;
     String desp = descriptionController.text;
     //print("Title is:${title}\nDescription is:${desp}");
     setState(() {
-      todoList.add([title, desp, false]);
+      todoList.add([title, desp]);
       titleController.clear();
       descriptionController.clear();
+    });
+  }
+
+  void deleteIndex(int index) {
+    setState(() {
+      todoList.removeAt(index);
     });
   }
 
@@ -55,7 +54,7 @@ class HomeScreenState extends State<homeScreen> {
                       child: customField(
                         editingController: titleController,
                         hintText: 'Title',
-                        addIcon: Icon(
+                        addIcon: const Icon(
                           Icons.title_outlined,
                           size: 30,
                         ),
@@ -63,7 +62,7 @@ class HomeScreenState extends State<homeScreen> {
                         labelText: 'Title',
                         textLength: 30,
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Expanded(
@@ -71,7 +70,7 @@ class HomeScreenState extends State<homeScreen> {
                       child: customField(
                         editingController: descriptionController,
                         hintText: 'Description',
-                        addIcon: Icon(
+                        addIcon: const Icon(
                           Icons.note_add_outlined,
                           size: 30,
                         ),
@@ -94,7 +93,7 @@ class HomeScreenState extends State<homeScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                       color: Color(0xff09203f),
                     ),
-                    child: Text("Cancel",
+                    child: const Text("Cancel",
                         style: TextStyle(fontSize: 25, color: Colors.white))),
               ),
               MaterialButton(
@@ -107,13 +106,13 @@ class HomeScreenState extends State<homeScreen> {
                   }
                 },
                 child: Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         bottom: 10, top: 10, left: 20, right: 20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       color: Color(0xff09203f),
                     ),
-                    child: Text("Add",
+                    child: const Text("Add",
                         style: TextStyle(fontSize: 25, color: Colors.white))),
               ),
             ],
@@ -139,11 +138,11 @@ class HomeScreenState extends State<homeScreen> {
           backgroundColor: Colors.deepPurple.shade200,
           foregroundColor: Colors.black,
           onPressed: addTask,
-          label: Text(
+          label: const Text(
             "Add task",
             style: TextStyle(fontSize: 25),
           ),
-          icon: Icon(
+          icon: const Icon(
             Icons.add,
             size: 35,
           ),
@@ -153,8 +152,7 @@ class HomeScreenState extends State<homeScreen> {
             return TodoList(
               titleName: todoList[index][0].toString(),
               despName: todoList[index][1].toString(),
-              checkTrue: bool.fromEnvironment(todoList[index][2].toString()),
-              onChnaged: (value) => checkBoxChanged(index),
+              deleteTask: (context) => deleteIndex(index),
             );
           },
           itemCount: todoList.length,
