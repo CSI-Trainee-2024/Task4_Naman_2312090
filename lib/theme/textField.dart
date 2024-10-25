@@ -32,7 +32,7 @@ class customField extends StatelessWidget {
         labelText: labelText,
         labelStyle: TextStyle(color: Color(0xff537895)),
         hintText: hintText,
-        hintStyle: TextStyle(fontSize: 25),
+        hintStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
         enabled: true,
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

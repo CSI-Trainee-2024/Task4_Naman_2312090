@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/theme/textField.dart';
+import 'package:todo_app/utils/todo_list.dart';
 
 class homeScreen extends StatefulWidget {
   @override
@@ -9,6 +10,32 @@ class homeScreen extends StatefulWidget {
 class HomeScreenState extends State<homeScreen> {
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
+
+  var todoList = [
+    [
+      'Work Hard',
+      'Need to workOut',
+      false,
+    ],
+    ['Drink Coffee', 'Need to drink', false],
+    ['Learn Flutter', 'Need to learn', false],
+    ['WorkOut', 'Need to work', false]
+  ];
+
+  void checkBoxChanged(int index) {
+    setState(() {
+     // todoList[index][2] = !todoList[index][2];
+    });
+  }
+
+  void saveTask() {
+    String title = titleController.text;
+    String desp = descriptionController.text;
+    print("Title is:${title}\nDescription is:${desp}");
+    setState(() {
+      todoList.add([title, desp, false]);
+    });
+  }
 
   void addTask() {
     showDialog(
@@ -70,11 +97,7 @@ class HomeScreenState extends State<homeScreen> {
                         style: TextStyle(fontSize: 25, color: Colors.white))),
               ),
               MaterialButton(
-                onPressed: () {
-                  String title = titleController.text;
-                  String desp = descriptionController.text;
-                  print("Title is:${title}\nDescription is:${desp}");
-                },
+                onPressed: saveTask,
                 child: Container(
                     padding: EdgeInsets.only(
                         bottom: 10, top: 10, left: 20, right: 20),
@@ -93,33 +116,40 @@ class HomeScreenState extends State<homeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-            child: Text(
-          "Daily Dash",
-          style: TextStyle(fontSize: 28),
-        )),
-        backgroundColor: Color(0xff09203f),
-        foregroundColor: Colors.white,
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        elevation: 10,
-        backgroundColor: Colors.deepPurple.shade200,
-        foregroundColor: Colors.black,
-        onPressed: addTask,
-        label: Text(
-          "Add task",
-          style: TextStyle(fontSize: 25),
+        backgroundColor: Color.fromARGB(255, 51, 98, 134),
+        appBar: AppBar(
+          title: const Center(
+              child: Text(
+            "Daily Dash",
+            style: TextStyle(fontSize: 28),
+          )),
+          backgroundColor: Color(0xff09203f),
+          foregroundColor: Colors.white,
         ),
-        icon: Icon(
-          Icons.add,
-          size: 35,
+        floatingActionButton: FloatingActionButton.extended(
+          elevation: 10,
+          backgroundColor: Colors.deepPurple.shade200,
+          foregroundColor: Colors.black,
+          onPressed: addTask,
+          label: Text(
+            "Add task",
+            style: TextStyle(fontSize: 25),
+          ),
+          icon: Icon(
+            Icons.add,
+            size: 35,
+          ),
         ),
-      ),
-      body: Container(
-        decoration: const BoxDecoration(color: Color.fromARGB(255, 45, 74, 96)),
-        //child: ListView.builder(itemBuilder: ),
-      ),
-    );
+        body: ListView.builder(
+          itemBuilder: (BuildContext context, index) {
+            return TodoList(
+              titleName: todoList[index][0].toString(),
+              despName: todoList[index][1].toString(),
+              checkTrue: bool.fromEnvironment(todoList[index][2].toString()),
+              onChnaged: (value) => checkBoxChanged(index),
+            );
+          },
+          itemCount: todoList.length,
+        ));
   }
 }
