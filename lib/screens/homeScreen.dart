@@ -19,21 +19,22 @@ class HomeScreenState extends State<homeScreen> {
     ],
     ['Drink Coffee', 'Need to drink', false],
     ['Learn Flutter', 'Need to learn', false],
-    ['WorkOut', 'Need to work', false]
   ];
 
   void checkBoxChanged(int index) {
     setState(() {
-     // todoList[index][2] = !todoList[index][2];
+      // todoList[index][2] = !todoList[index][2];
     });
   }
 
   void saveTask() {
     String title = titleController.text;
     String desp = descriptionController.text;
-    print("Title is:${title}\nDescription is:${desp}");
+    //print("Title is:${title}\nDescription is:${desp}");
     setState(() {
       todoList.add([title, desp, false]);
+      titleController.clear();
+      descriptionController.clear();
     });
   }
 
@@ -97,7 +98,14 @@ class HomeScreenState extends State<homeScreen> {
                         style: TextStyle(fontSize: 25, color: Colors.white))),
               ),
               MaterialButton(
-                onPressed: saveTask,
+                onPressed: () {
+                  if (titleController.text == null) {
+                    Navigator.pop(context);
+                  } else {
+                    Navigator.pop(context);
+                    saveTask();
+                  }
+                },
                 child: Container(
                     padding: EdgeInsets.only(
                         bottom: 10, top: 10, left: 20, right: 20),
