@@ -14,10 +14,10 @@ class HomeScreenState extends State<homeScreen> {
   var todoList = [
     [
       'Work Hard',
-      'Need to workOut',
+      '1 hour Daily',
     ],
-    ['Drink Coffee', 'Need to drink'],
-    ['Learn Flutter', 'Need to learn'],
+    ['Drink Coffee', '2 Cup a day'],
+    ['Learn Flutter', 'Need to learn more'],
   ];
 
   void saveTask() {
@@ -37,15 +37,32 @@ class HomeScreenState extends State<homeScreen> {
     });
   }
 
+  void datePick() async {
+    //DateTime? Datepick =
+    await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2024));
+  }
+
+  void timePick() async {
+    //TimeOfDay? Timepick =
+    await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        initialEntryMode: TimePickerEntryMode.input);
+  }
+
   void addTask() {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: Colors.deepPurple.shade200,
+            //backgroundColor: Color(0xffbac8e0),
             title: Text("Add New task"),
             content: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
@@ -60,7 +77,7 @@ class HomeScreenState extends State<homeScreen> {
                         ),
                         //font_hint: 25.0,
                         labelText: 'Title',
-                        textLength: 30,
+                        textLength: 20,
                       )),
                   const SizedBox(
                     height: 20,
@@ -77,8 +94,20 @@ class HomeScreenState extends State<homeScreen> {
                         // font_hint: 25.0,
                         labelText: 'Description',
                         maxLines: 5,
-                        textLength: 60,
-                      ))
+                        textLength: 100,
+                      )),
+                  GestureDetector(
+                    onTap: datePick,
+                    child: Container(
+                      child: Text("Set a Date"),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: timePick,
+                    child: Container(
+                      child: Text('Set Time'),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -123,7 +152,7 @@ class HomeScreenState extends State<homeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 51, 98, 134),
+        backgroundColor: Color(0xff6a85b6),
         appBar: AppBar(
           title: const Center(
               child: Text(
@@ -135,7 +164,7 @@ class HomeScreenState extends State<homeScreen> {
         ),
         floatingActionButton: FloatingActionButton.extended(
           elevation: 10,
-          backgroundColor: Colors.deepPurple.shade200,
+          backgroundColor: Color(0xffbac8e0),
           foregroundColor: Colors.black,
           onPressed: addTask,
           label: const Text(
