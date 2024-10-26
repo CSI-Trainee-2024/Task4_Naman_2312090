@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class customField extends StatelessWidget {
@@ -7,6 +10,8 @@ class customField extends StatelessWidget {
   final String? labelText;
   final Icon? addIcon;
   final TextEditingController editingController;
+  final bool read;
+  void Function()? onTap;
 
   customField(
       {this.maxLines,
@@ -14,7 +19,9 @@ class customField extends StatelessWidget {
       this.textLength,
       this.labelText,
       this.addIcon,
-      required this.editingController});
+      required this.read,
+      required this.editingController, this.onTap
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +30,7 @@ class customField extends StatelessWidget {
       //keyboardType: TextInputType.multiline,
       maxLength: textLength,
       maxLines: maxLines,
+      readOnly: read,
       decoration: InputDecoration(
         //filled: true,
         prefixIcon: addIcon,
@@ -31,13 +39,14 @@ class customField extends StatelessWidget {
         hintText: hintText,
         // hintStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
         enabled: true,
-        focusedBorder: OutlineInputBorder(
+        enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: Color(0xff09203f), width: 3)),
-        enabledBorder: OutlineInputBorder(
+        focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: Color(0xff537895), width: 3)),
       ),
+      onTap: onTap,
     );
   }
 }

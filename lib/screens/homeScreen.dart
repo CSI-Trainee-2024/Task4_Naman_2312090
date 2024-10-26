@@ -10,6 +10,8 @@ class homeScreen extends StatefulWidget {
 class HomeScreenState extends State<homeScreen> {
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
+  var dateController = TextEditingController();
+  var timeController = TextEditingController();
 
   var todoList = [
     [
@@ -38,20 +40,28 @@ class HomeScreenState extends State<homeScreen> {
   }
 
   void datePick() async {
-    //DateTime? Datepick =
+    final DateTime? Datepick =
     await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2020),
         lastDate: DateTime(2024));
+        // if(Datepick ! =null && Datepick! =DateTime.now()){
+        //   setState(() {
+        //     dateController.text ="${Datepick.toLocal()}".split('')[0];
+        //   });
+        // }
   }
 
   void timePick() async {
-    //TimeOfDay? Timepick =
+    final TimeOfDay? Timepick =
     await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
         initialEntryMode: TimePickerEntryMode.input);
+        //  if(Timepick ){
+
+        // }
   }
 
   void addTask() {
@@ -71,6 +81,7 @@ class HomeScreenState extends State<homeScreen> {
                       child: customField(
                         editingController: titleController,
                         hintText: 'Title',
+                        read: false,
                         addIcon: const Icon(
                           Icons.title_outlined,
                           size: 30,
@@ -80,13 +91,14 @@ class HomeScreenState extends State<homeScreen> {
                         textLength: 20,
                       )),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Expanded(
                       flex: 2,
                       child: customField(
                         editingController: descriptionController,
                         hintText: 'Description',
+                        read: false,
                         addIcon: const Icon(
                           Icons.note_add_outlined,
                           size: 30,
@@ -96,18 +108,36 @@ class HomeScreenState extends State<homeScreen> {
                         maxLines: 5,
                         textLength: 100,
                       )),
-                  GestureDetector(
-                    onTap: datePick,
-                    child: Container(
-                      child: Text("Set a Date"),
-                    ),
+                  const SizedBox(
+                    height: 10,
                   ),
-                  GestureDetector(
-                    onTap: timePick,
-                    child: Container(
-                      child: Text('Set Time'),
-                    ),
-                  )
+                  Expanded(
+                      flex: 1,
+                      child: customField(
+                        editingController: dateController,
+                        hintText: 'yyyy-mm-dd',
+                        read: true,
+                        addIcon: const Icon(
+                          Icons.calendar_month,
+                          size: 30,
+                        ),
+                        onTap: datePick,
+                      )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: customField(
+                        editingController: timeController,
+                        read: true,
+                        hintText: 'hh-mm',
+                        addIcon: const Icon(
+                          Icons.timer,
+                          size: 30,
+                        ),
+                        onTap: timePick,
+                      )),
                 ],
               ),
             ),
