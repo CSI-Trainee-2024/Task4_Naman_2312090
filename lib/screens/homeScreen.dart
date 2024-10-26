@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/theme/textField.dart';
 import 'package:todo_app/utils/todo_list.dart';
@@ -22,6 +24,9 @@ class HomeScreenState extends State<homeScreen> {
     ['Learn Flutter', 'Need to learn more'],
   ];
 
+  var selectedOption;
+  var arrOption = ['WORK', 'PERSONAL', 'SHOPPING', 'OTHER'];
+
   void saveTask() {
     String title = titleController.text;
     String desp = descriptionController.text;
@@ -40,28 +45,26 @@ class HomeScreenState extends State<homeScreen> {
   }
 
   void datePick() async {
-    final DateTime? Datepick =
-    await showDatePicker(
+    final DateTime? Datepick = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2020),
         lastDate: DateTime(2024));
-        // if(Datepick ! =null && Datepick! =DateTime.now()){
-        //   setState(() {
-        //     dateController.text ="${Datepick.toLocal()}".split('')[0];
-        //   });
-        // }
+    // if(Datepick ! =null){
+    //   setState(() {
+    //     dateController.text ="${Datepick.toLocal()}".split('')[0];
+    //   });
+    // }
   }
 
   void timePick() async {
-    final TimeOfDay? Timepick =
-    await showTimePicker(
+    final TimeOfDay? Timepick = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
         initialEntryMode: TimePickerEntryMode.input);
-        //  if(Timepick ){
+    //  if(Timepick ){
 
-        // }
+    // }
   }
 
   void addTask() {
@@ -91,6 +94,57 @@ class HomeScreenState extends State<homeScreen> {
                         textLength: 20,
                       )),
                   const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 3, color: Color(0xff09203f))),
+                    child: DropdownButton(
+                      icon: Icon(Icons.category_rounded),
+                      iconSize: 30,
+                      isExpanded: true,
+                      hint: const Text(
+                        "Select a option",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      value: selectedOption,
+                      items: arrOption.map((value) {
+                        return DropdownMenuItem(
+                          enabled: true,
+                          child: Center(
+                            child: Container(
+                                margin: EdgeInsets.only(bottom: 10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    gradient: const LinearGradient(colors: [
+                                      Color(0xff09203f),
+                                      Color(0xff537895)
+                                    ]),
+                                    border: Border.all(
+                                        width: 1,
+                                        color: Colors.lightBlueAccent)),
+                                child: Center(
+                                    child: Text(
+                                  "${value}",
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                ))),
+                          ),
+                          value: value,
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedOption = value;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
                     height: 10,
                   ),
                   Expanded(
