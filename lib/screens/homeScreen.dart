@@ -16,9 +16,9 @@ class HomeScreenState extends State<homeScreen> {
   var timeController = TextEditingController();
 
   var todoList = [
-    ['Work Out', '1 hour Daily', '8:30'],
-    ['Drink Coffee', '2 Cup a day', '9:10'],
-    ['Learn Flutter', 'Need to learn more', '12:10'],
+    ['Work Out', '1 hour Daily', '8:30', 'EXERCISE'],
+    ['Drink Coffee', '2 Cup a day', '9:10', 'PERSONAL'],
+    ['Learn Flutter', 'Need to learn more', '12:10', 'WORK'],
   ];
 
   String? selectedOption;
@@ -28,7 +28,8 @@ class HomeScreenState extends State<homeScreen> {
     String title = titleController.text;
     String desp = descriptionController.text;
     setState(() {
-      todoList.add([title, desp, timeController.text]);
+      todoList
+          .add([title, desp, timeController.text, selectedOption.toString()]);
       titleController.clear();
       descriptionController.clear();
     });
@@ -109,6 +110,7 @@ class HomeScreenState extends State<homeScreen> {
                       value: selectedOption,
                       items: arrOption.map((value) {
                         return DropdownMenuItem(
+                          value: value,
                           enabled: true,
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
@@ -130,7 +132,6 @@ class HomeScreenState extends State<homeScreen> {
                                       fontWeight: FontWeight.w600),
                                 ))),
                           ),
-                          value: value,
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -274,6 +275,7 @@ class HomeScreenState extends State<homeScreen> {
               despName: todoList[index][1].toString(),
               deleteTask: (context) => deleteIndex(index),
               timeC: todoList[index][2].toString(),
+              category: todoList[index][3].toString(),
             );
           },
           itemCount: todoList.length,
