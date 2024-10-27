@@ -5,11 +5,13 @@ class TodoList extends StatefulWidget {
   TodoList(
       {required this.titleName,
       required this.despName,
-      required this.deleteTask});
+      required this.deleteTask,
+      required this.timeC});
 
   final String titleName;
   final String despName;
   final Function(BuildContext) deleteTask;
+  final String timeC;
 
   @override
   State<TodoList> createState() => _TodoListState();
@@ -31,7 +33,7 @@ class _TodoListState extends State<TodoList> {
           )
         ]),
         child: ListTile(
-          contentPadding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+          contentPadding: EdgeInsets.only(top: 8.0, bottom: 8.0, right: 10.0),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           tileColor: Color(0xff09203f),
@@ -59,6 +61,10 @@ class _TodoListState extends State<TodoList> {
           subtitle: Text(
             widget.despName,
             style: TextStyle(fontSize: 17),
+          ),
+          trailing: Text(
+            widget.timeC,
+            style: TextStyle(fontSize: 18),
           ),
         ),
       ),

@@ -16,12 +16,9 @@ class HomeScreenState extends State<homeScreen> {
   var timeController = TextEditingController();
 
   var todoList = [
-    [
-      'Work Hard',
-      '1 hour Daily',
-    ],
-    ['Drink Coffee', '2 Cup a day'],
-    ['Learn Flutter', 'Need to learn more'],
+    ['Work Out', '1 hour Daily', '8:30'],
+    ['Drink Coffee', '2 Cup a day', '9:10'],
+    ['Learn Flutter', 'Need to learn more', '12:10'],
   ];
 
   String? selectedOption;
@@ -31,7 +28,7 @@ class HomeScreenState extends State<homeScreen> {
     String title = titleController.text;
     String desp = descriptionController.text;
     setState(() {
-      todoList.add([title, desp]);
+      todoList.add([title, desp, timeController.text]);
       titleController.clear();
       descriptionController.clear();
     });
@@ -49,11 +46,6 @@ class HomeScreenState extends State<homeScreen> {
         initialDate: DateTime.now(),
         firstDate: DateTime(2020),
         lastDate: DateTime(2024));
-    // if(Datepick ! =null){
-    //   setState(() {
-    //     dateController.text ="${Datepick.toLocal()}".split('')[0];
-    //   });
-    // }
   }
 
   TimeOfDay time = TimeOfDay(hour: 8, minute: 30);
@@ -281,6 +273,7 @@ class HomeScreenState extends State<homeScreen> {
               titleName: todoList[index][0].toString(),
               despName: todoList[index][1].toString(),
               deleteTask: (context) => deleteIndex(index),
+              timeC: todoList[index][2].toString(),
             );
           },
           itemCount: todoList.length,
