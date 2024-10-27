@@ -27,21 +27,21 @@ class _TodoListState extends State<TodoList> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 0),
-      child: Slidable(
-        endActionPane: ActionPane(motion: StretchMotion(), children: [
-          SlidableAction(
-            onPressed: widget.deleteTask,
-            icon: Icons.delete,
-            borderRadius: BorderRadius.circular(15),
-          )
-        ]),
-        child: Column(
-          children: [
-            Text(
-              widget.category,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            ListTile(
+      child: Column(
+        children: [
+          Text(
+            widget.category,
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          Slidable(
+            endActionPane: ActionPane(motion: StretchMotion(), children: [
+              SlidableAction(
+                onPressed: widget.deleteTask,
+                icon: Icons.delete,
+                borderRadius: BorderRadius.circular(15),
+              )
+            ]),
+            child: ListTile(
               contentPadding:
                   EdgeInsets.only(top: 8.0, bottom: 8.0, right: 10.0),
               shape: RoundedRectangleBorder(
@@ -77,8 +77,8 @@ class _TodoListState extends State<TodoList> {
                 style: TextStyle(fontSize: 18),
               ),
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

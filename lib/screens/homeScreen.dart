@@ -32,6 +32,7 @@ class HomeScreenState extends State<homeScreen> {
           .add([title, desp, timeController.text, selectedOption.toString()]);
       titleController.clear();
       descriptionController.clear();
+      timeController.clear();
     });
   }
 
