@@ -24,13 +24,12 @@ class HomeScreenState extends State<homeScreen> {
     ['Learn Flutter', 'Need to learn more'],
   ];
 
-  var selectedOption;
+  String? selectedOption;
   var arrOption = ['WORK', 'PERSONAL', 'SHOPPING', 'OTHER'];
 
   void saveTask() {
     String title = titleController.text;
     String desp = descriptionController.text;
-    //print("Title is:${title}\nDescription is:${desp}");
     setState(() {
       todoList.add([title, desp]);
       titleController.clear();
@@ -44,8 +43,8 @@ class HomeScreenState extends State<homeScreen> {
     });
   }
 
-  void datePick() async {
-    final DateTime? Datepick = await showDatePicker(
+  void datePick() {
+    showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2020),
@@ -57,14 +56,19 @@ class HomeScreenState extends State<homeScreen> {
     // }
   }
 
-  void timePick() async {
-    final TimeOfDay? Timepick = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        initialEntryMode: TimePickerEntryMode.input);
-    //  if(Timepick ){
+  TimeOfDay time = TimeOfDay(hour: 8, minute: 30);
 
-    // }
+  void timePick() {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      //initialEntryMode: TimePickerEntryMode.input
+    ).then((value) {
+      setState(() {
+        time = value!;
+        timeController.text = "${time.format(context)}";
+      });
+    });
   }
 
   void addTask() {
@@ -74,8 +78,9 @@ class HomeScreenState extends State<homeScreen> {
           return AlertDialog(
             //backgroundColor: Color(0xffbac8e0),
             title: Text("Add New task"),
+
             content: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.6,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
@@ -113,9 +118,9 @@ class HomeScreenState extends State<homeScreen> {
                       items: arrOption.map((value) {
                         return DropdownMenuItem(
                           enabled: true,
-                          child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
                             child: Container(
-                                margin: EdgeInsets.only(bottom: 10),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     gradient: const LinearGradient(colors: [
@@ -123,8 +128,7 @@ class HomeScreenState extends State<homeScreen> {
                                       Color(0xff537895)
                                     ]),
                                     border: Border.all(
-                                        width: 1,
-                                        color: Colors.lightBlueAccent)),
+                                        width: 1, color: Colors.black)),
                                 child: Center(
                                     child: Text(
                                   "${value}",
@@ -167,9 +171,19 @@ class HomeScreenState extends State<homeScreen> {
                   ),
                   Expanded(
                       flex: 1,
+                      // child: MaterialButton(
+                      //   onPressed: datePick,
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //         border: Border.all(
+                      //             color: Color(0xff09203f), width: 3)),
+                      //     width: double.infinity,
+                      //     child: Text("YYYY-MM-DD"),
+                      //   ),
+                      // )
                       child: customField(
                         editingController: dateController,
-                        hintText: 'yyyy-mm-dd',
+                        hintText: 'YYYY-MM--DD',
                         read: true,
                         addIcon: const Icon(
                           Icons.calendar_month,
@@ -185,7 +199,7 @@ class HomeScreenState extends State<homeScreen> {
                       child: customField(
                         editingController: timeController,
                         read: true,
-                        hintText: 'hh-mm',
+                        hintText: 'HH-MM',
                         addIcon: const Icon(
                           Icons.timer,
                           size: 30,
@@ -195,6 +209,7 @@ class HomeScreenState extends State<homeScreen> {
                 ],
               ),
             ),
+
             actions: [
               MaterialButton(
                 onPressed: () {
